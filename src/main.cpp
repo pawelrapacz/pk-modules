@@ -1,5 +1,5 @@
 import Complex;
-import <iostream>
+import <iostream>;
 
 int main() {
     Complex<double> a{1.0, 2.3};
