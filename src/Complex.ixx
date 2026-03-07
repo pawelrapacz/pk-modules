@@ -10,15 +10,16 @@ public:
     Complex(Tp real = Tp(), Tp imag = Tp())
         : _real(real), _imag(imag) { }
 
-    Complex(const Complex& other) noexcept = default;
-
-    Complex& operator=(const Complex& other) noexcept = default;
-
     Complex& operator=(const Tp& value) noexcept {
         _real = value;
         _imag = Tp();
         return *this;
     }
+
+    Complex(const Complex&) noexcept = default;
+    Complex(Complex&&) noexcept = default;
+    Complex& operator=(const Complex& other) noexcept = default;
+    Complex& operator=(Complex&&) noexcept = default;
 
     Tp real() const noexcept {
         return _real;
@@ -35,8 +36,6 @@ public:
     void imag(Tp value) noexcept {
         _imag = value;
     }
-
-
 
     Complex& operator+=(const Tp& value) {
         _real += value;
@@ -59,8 +58,6 @@ public:
         _imag /= value;
         return *this;
     }
-
-
 
     Complex& operator+=(const Complex& other) {
         _real += other.real();

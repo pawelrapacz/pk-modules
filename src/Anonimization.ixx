@@ -1,8 +1,9 @@
+module;
+#include <string>
+
 export module Anonimization;
 
-import <string>;
-
-std::string mask_chars(std::string&, size_t, size_t) 
+std::string mask_chars(const std::string& str, size_t end = std::string::npos, size_t pos = 2);
 
 export std::string anonymize_email(const std::string& email) {
     return mask_chars(email, email.find('@'));
@@ -16,10 +17,14 @@ export std::string anonymize_name(const std::string& name) {
     return mask_chars(name);
 }
 
-std::string mask_chars(std::string& str, size_t end = std::string::npos, size_t pos = 2) {
-    if (end > str.size())
-        end = str.size();
+std::string mask_chars(const std::string& str, size_t end, size_t pos) {
+    std::string out = str;
+
+    if (end > out.size())
+        end = out.size();
 
     for (size_t i = pos; i < end; i++)
-        str[i] = '*';
+        out[i] = '*';
+
+    return out;
 }

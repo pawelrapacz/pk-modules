@@ -1,115 +1,151 @@
 module;
 
-#include <cstddef>;
+#include <cstddef>
+#include <stdexcept>
+#include <utility>
+#include <vector>
 
 export module Matrix;
 
-export template<typename Tp = double, size_t Rows, size_t Cols>
-class Matrix {
-    using DataTab = Tp[Rows][Cols];
+export class Matrix {
 public:
+    using Tp = double;
+    using DataTable = std::vector<std::vector<Tp>>;
 
-    Matrix(DataTab m = DataTab())
-        : _data(m) { }
+    Matrix() = default;
+    Matrix(const Matrix&) = default;
+    Matrix(Matrix&&) noexcept = default;
+    Matrix& operator=(const Matrix&) = default;
+    Matrix& operator=(Matrix&&) = default;
 
-    Tp* operator[](size_t row) {
+    Matrix(size_t rows, size_t cols)
+        : _rows(rows), _cols(cols), _data(_rows) {
+            for (auto& i : _data)
+                i.resize(_cols);
+    }
+
+    size_t rows() const {
+        return _rows;
+    }
+
+    size_t cols() const {
+        return _cols;
+    }
+
+    std::pair<size_t, size_t> dim() const {
+        return {_rows, _cols};
+    }
+
+    std::vector<double>& operator[](size_t row) {
         return _data[row];
     }
 
-    const Tp* operator[](size_t row) const {
+    const std::vector<double>& operator[](size_t row) const {
         return _data[row];
-    }
-
-    Matrix& operator*=(const Tp& val) {
-        for (size_t i = 0; i < Rows; i++)
-            for (size_t j = 0; j < Cols; j++)
-                _data[i][j] *= val;
-        
-        return *this;
     }
 
     Matrix& operator+=(const Matrix& other) {
-        for (size_t i = 0; i < Rows; i++)
-            for (size_t j = 0; j < Cols; j++)
+        if (dim() != other.dim())
+            throw std::logic_error("Matrices have to have the same dimensions.");
+
+        for (size_t i = 0; i < rows(); i++)
+            for (size_t j = 0; j < cols(); j++)
                 _data[i][j] += other._data[i][j];
         
         return *this;
     }
 
     Matrix& operator-=(const Matrix& other) {
-        for (size_t i = 0; i < Rows; i++)
-            for(size_t j = 0; j < Cols; j++)
+        if (dim() != other.dim())
+            throw std::logic_error("Matrices have to have the same dimensions.");
+
+        for (size_t i = 0; i < rows(); i++)
+            for(size_t j = 0; j < cols(); j++)
                 _data[i][j] -= other._data[i][j];
         
         return *this;
     }
 
-    Matrix operator+() const {
+    Matrix& operator*=(const Tp& val) noexcept {
+        for (size_t i = 0; i < rows(); i++)
+            for (size_t j = 0; j < cols(); j++)
+                _data[i][j] *= val;
+        
         return *this;
     }
 
-    Matrix operator-() const {
-        Matrix res = *this;
+    Matrix& operator*=(const Matrix& other) {              
+        *this = std::move(*this * other);
+        return *this;
+    }
 
-        for (size_t i = 0; i < Rows; i++)
-            for(size_t j = 0; j < Cols; j++)
-                _data[i][j] = -_data[i][j];
-        
-        return res;
+    void transpose() {
+        Matrix trsp(cols(), rows());
+
+        for (size_t i = 0; i < rows(); i++) {
+            for (size_t j = 0; j < cols(); j++)
+                trsp._data[j][i] = _data[i][j];
+        }
+        *this = std::move(trsp);
     }
 
 private:
-    DataTab _data;
+    size_t _rows;
+    size_t _cols;
+    DataTable _data;
 
-    friend Matrix<Tp, Cols, Rows> transpose(const Matrix<Tp, Rows, Cols>&); 
+    friend Matrix operator*(const Matrix&, const Matrix&);
 };
 
 
-export template<typename Tp, size_t Rows, size_t Cols>
-Matrix<Tp, Cols, Rows> transpose(const Matrix<Tp, Rows, Cols>& mtx) {
-    Matrix<Tp, Cols, Rows> trns;
+Matrix operator+(const Matrix& m) noexcept {
+    return m;
+}
 
-    for (size_t i = 0; i < Rows; i++)
-        for (size_t j = 0; j < Cols; j++)
-            trns._data[j][i] = mtx._data[i][j];
+Matrix operator-(const Matrix& m) {
+    Matrix res = m;
+
+    for (size_t i = 0; i < m.rows(); i++)
+        for(size_t j = 0; j < m.cols(); j++)
+            res[i][j] = -m[i][j];
     
-    return trns;
+    return res;
 }
 
-export template<typename Tp, size_t Rows, size_t Comn, size_t Cols>
-Matrix<Tp, Rows, Cols> operator*(const Matrix<Tp, Rows, Comn>& x, const Matrix<Tp, Comn, Cols>& y) {
-    Matrix<Tp, Cols, Rows> out();
-
-    for (size_t i = 0; i < Rows; i++)
-        for (size_t j = 0; j < Cols; j++)
-            for (size_t k = 0; k < Comn; k++)
-                out[i][j] += x[i][k] * x[k][j];
-            
-    return out;
+export Matrix operator+(const Matrix& x, const Matrix& y) {
+    Matrix r = x;
+    r += y;
+    return r;
 }
 
-export template<typename Tp, size_t Rows, size_t Cols>
-Matrix<Tp, Rows, Cols> operator*(const Matrix<Tp, Rows, Cols>& x, const Tp& y) {
-    Matrix<Tp, Rows, Cols> out = x;
-    out *= y;
-    return out;
+export Matrix operator-(const Matrix& x, const Matrix& y) {
+    Matrix r = x;
+    r -= y;
+    return r;
 }
 
-export template<typename Tp, size_t Rows, size_t Cols>
-Matrix<Tp, Rows, Cols> operator*(const Tp& x, const Matrix<Tp, Rows, Cols>& y) {
-    return operator*(y, x);
+export Matrix operator*(const Matrix& x, const Matrix& y) {
+        if (x.cols() != y.rows())
+            throw std::logic_error("");
+        
+        Matrix out(x.rows(), y.cols());
+
+        for (size_t i = 0; i < out.rows(); i++)
+            for (size_t j = 0; j < out.cols(); j++)
+                for (size_t k = 0; k < x.rows(); k++)
+                    out[i][j] += x[k][i] * y[j][k];
+                
+        return out;
 }
 
-export template<typename Tp, size_t Rows size_t Cols>
-Matrix<Tp, Rows, Cols> operator+(const Matrix<Tp, Rows, Cols>& x, const Matrix<Tp, Rows, Cols>& y) {
-    Matrix<Tp, Cols, Rows> out = x;
-    out += y;
-    return out;
+export Matrix operator*(const Matrix& x, Matrix::Tp y) {
+    Matrix r = x;
+    r *= y;
+    return r;
 }
 
-export template<typename Tp, size_t Rows size_t Cols>
-Matrix<Tp, Rows, Cols> operator-(const Matrix<Tp, Rows, Cols>& x, const Matrix<Tp, Rows, Cols>& y) {
-    Matrix<Tp, Cols, Rows> out = x;
-    out -= y;
-    return out;
+export Matrix operator*(Matrix::Tp x, const Matrix& y) {
+    Matrix r = y;
+    r *= x;
+    return r;
 }
