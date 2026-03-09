@@ -7,7 +7,7 @@ public:
 	operation(int _sum):optime(my::time()), sum(_sum){}
 	void print_operation() {
 		std::cout << "operation time: ";
-		optime.printGMT();
+		optime.printLocal();
 		std::cout << "operation sum: "<<sum<<std::endl;
 	}
 };
