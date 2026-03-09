@@ -17,7 +17,11 @@ TEST_CASE("phone number anonimization") {
 
 TEST_CASE("name anonimization") {
     CHECK(mask_name("John") == "J***");
-    CHECK(mask_name("Michael") == "Mi*****q");
+    CHECK(mask_name("Michael") == "Mi*****");
     CHECK(mask_name("Smith") == "S****");
     CHECK(mask_name("Donald") == "Do****");
+}
+
+TEST_CASE("auto anonimimization") {
+    CHECK(autoAnonimization("Jan Jan 666777888 Grazyna Te asd2 123456789 fdsa Henryk Sienkiewicz Robert Mak�owicz fsdfdsa asdfasdfsd") == "J** J** ******888 Gr***** ** asd2 ******789 fdsa He**** Si********* Ro**** Ma********* fsdfdsa asdfasdfsd ");
 }

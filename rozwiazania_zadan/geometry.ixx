@@ -1,15 +1,21 @@
 module;
-#include<cmath>;
-#include<iostream>
+
+#include <cmath>
+#include <iostream>
+
 export module mathh:geometry;
+
 export class shape {
 	int base_edges_num;
 	bool type; //0 to graniastoslup, 1 ostroslup
 	int a;
 	int H;
+
 public:
 	shape(){}
+
 	shape(int _base_ed_n, bool _type, int _base_l, int _height) :base_edges_num(_base_ed_n),type(_type), a(_base_l), H(_height) {}
+
 	double base_surface() {
 		double base1_surface;
 		if (base_edges_num == 3) {
@@ -27,20 +33,16 @@ public:
 		}
 		return base1_surface;
 	}
+
 	double surface_area() {
 		double base1_surface= this->base_surface();
 		
-
 		if (type == 0) {
 			//graniastoslup
 			double side_surface=a* H*base_edges_num;
 			double total_base_surface = 2 * base1_surface;
 
-			
-
 			return total_base_surface+ side_surface;
-			
-			
 		}
 		else {
 			//ostroslup
@@ -72,6 +74,7 @@ public:
 		}
 		
 	}
+
 	double volume() {
 		double base1_surface = this->base_surface();
 		if (type == 0) {

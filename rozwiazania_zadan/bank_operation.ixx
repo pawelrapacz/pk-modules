@@ -1,10 +1,15 @@
 export module bank:operation;
+
 import DateFormats;
+
 export class operation {
 	my::time optime;
 	int sum;
+
 public:
-	operation(int _sum):optime(my::time()), sum(_sum){}
+	operation(int _sum)
+		: optime(my::time()), sum(_sum) {}
+
 	void print_operation() {
 		std::cout << "operation time: ";
 		optime.printLocal();

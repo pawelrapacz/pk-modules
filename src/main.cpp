@@ -1,15 +1,20 @@
-#include <iostream>
-#include <iomanip>
-
+import <iostream>;
 import Complex;
+import DateFormats;
+import Matrix;
+import Anonimization;
+
 
 int main() {
     Complex<double> a{1.0, 2.3};
     Complex<double> b = 6.28;
     auto c = a / b;
 
-    std::cout << std::fixed << std::setprecision(17);
-    std::cout << "hello world\n" << 0.1f+0.2f << std::endl;
+	Matrix m1({{1, 2, 3}});
+	Matrix m2({{1, 2, 3}});
+	m1 + m2;
+	if (m1 * 2 == m1 + m2)
+		std::cout << "m1 * 2 == m1 + m2\n";
     
     my::time t;
 	t.printZULU();
@@ -23,9 +28,9 @@ int main() {
 	t2.printGMT();
 	t2.printLocal();
 	
-	std::cout << anonymize_email("testowy.mail@enter.pl") << std::endl;
-	std::cout << anonymize_name("test test") << std::endl;
-	std::cout << anonymize_phone_number("123344555") << std::endl;
-	std::cout << autoAnonimization("Jan Jan 666777888 Grazyna Te asd2 123456789 fdsa Henryk Sienkiewicz Robert Mak³owicz fsdfdsa asdfasdfsd") << std::endl;
+	std::cout << mask_email("testowy.mail@enter.pl") << std::endl;
+	std::cout << mask_name("test test") << std::endl;
+	std::cout << mask_phone("123344555") << std::endl;
+	std::cout << autoAnonimization("Jan Jan 666777888 Grazyna Te asd2 123456789 fdsa Henryk Sienkiewicz Robert Makï¿½owicz fsdfdsa asdfasdfsd") << std::endl;
     return 0;
 }

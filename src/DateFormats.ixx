@@ -1,9 +1,12 @@
 module;
+
+#include <string>
+#include <chrono>
+#include <iostream>
+#include <iomanip>
+
 export module DateFormats;
-//#include<time.h>;
-#include<chrono>;
-#include<iostream>;
-//#include<format>;
+
 std::string months[]{
             "JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"
 };
@@ -15,7 +18,9 @@ export class time {
     int hour;
     int minutes;
     int seconds;
+
 public:
+
     time(){
         auto time = std::chrono::system_clock::now();
         auto dp = std::chrono::floor<std::chrono::days>(time);
@@ -31,6 +36,7 @@ public:
         minutes = hhmmss.minutes().count();
         seconds = hhmmss.seconds().count();
     }
+
     time(std::string zulu) {
         try {
             
@@ -60,6 +66,7 @@ public:
             year=month=day=hour=minutes=seconds = 0;
         }
     }
+
     /*time(std::string GMT) {
         try {
 
@@ -75,6 +82,7 @@ public:
             year = month = day = hour = minutes = seconds = 0;
         }
     }*/
+
     time(int _year, unsigned _month, unsigned _day, int _hour, int _minutes, int _seconds):year(_year),month(_month), day(_day), hour(_hour), minutes(_minutes), seconds(_seconds){}
 
     void printGMT() {
@@ -88,6 +96,7 @@ public:
             << std::setw(2) << std::setfill('0') << seconds << " UTC/GMT"<<std::endl;
             
     }
+
     void printLocal() {
         std::cout << "Local time "
             << std::setw(4) << std::setfill('0') << year << "-"
@@ -97,6 +106,7 @@ public:
             << std::setw(2) << std::setfill('0') << minutes << ":"
             << std::setw(2) << std::setfill('0') << seconds << std::endl;
     }
+
     void printZULU() {
         std::string months[]{
             "JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"
@@ -109,5 +119,4 @@ public:
     }
 };
 
-
-}
+} // namespace my

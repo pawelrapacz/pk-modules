@@ -18,7 +18,14 @@ FILES
     src/Complex.ixx
     src/Matrix.ixx
     src/Anonimization.ixx
+    src/Anonimization:Masking.ixx
     src/DateFormats.ixx
 )
+
+add_executable(${PROJECT_NAME}
+    src/main.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE modules)
 
 add_subdirectory(tests)

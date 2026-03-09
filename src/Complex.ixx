@@ -191,37 +191,35 @@ Complex<Tp> operator/(const Tp& x, const Complex<Tp>& y) {
     return r;
 }
 
-export {
-    template<typename Tp>
-    bool operator==(const Complex<Tp>& x, const Complex<Tp>& y) {
-        return x.real() == y.real() && x.imag() == y.imag();
-    }
+export template<typename Tp>
+bool operator==(const Complex<Tp>& x, const Complex<Tp>& y) {
+    return x.real() == y.real() && x.imag() == y.imag();
+}
 
-    template<typename Tp>
-    bool operator==(const Tp& x, const Complex<Tp>& y) {
-        return x == y.real() && Tp() == y.imag();
-    }
+export template<typename Tp>
+bool operator==(const Tp& x, const Complex<Tp>& y) {
+    return x == y.real() && Tp() == y.imag();
+}
 
-    template<typename Tp>
-    bool operator==(const Complex<Tp>& x, const Tp& y) {
-        return x.real() == y && x.imag() == Tp();
-    }
+export template<typename Tp>
+bool operator==(const Complex<Tp>& x, const Tp& y) {
+    return x.real() == y && x.imag() == Tp();
+}
 
 
-    template<typename Tp>
-    bool operator!=(const Complex<Tp>& x, const Complex<Tp>& y) {
-        return x.real() != y.real() || x.imag() != y.imag();
-    }
+export template<typename Tp>
+bool operator!=(const Complex<Tp>& x, const Complex<Tp>& y) {
+    return x.real() != y.real() || x.imag() != y.imag();
+}
 
-    template<typename Tp>
-    bool operator!=(const Tp& x, const Complex<Tp>& y) {
-        return x != y.real() || Tp() != y.imag();
-    }
+export template<typename Tp>
+bool operator!=(const Tp& x, const Complex<Tp>& y) {
+    return x != y.real() || Tp() != y.imag();
+}
 
-    template<typename Tp>
-    bool operator!=(const Complex<Tp>& x, const Tp& y) {
-        return x.real() != y || x.imag() != Tp();
-    }
+export template<typename Tp>
+bool operator!=(const Complex<Tp>& x, const Tp& y) {
+    return x.real() != y || x.imag() != Tp();
 }
 
 export template<typename Tp>
