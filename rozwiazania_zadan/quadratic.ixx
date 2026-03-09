@@ -1,3 +1,21 @@
 module;
+
+#include <utility>
+#include <cmath>
+
 export module mathh:quadratic;
-import :Complex;
+import Complex;
+
+export template<typename Tp>
+std::pair<Complex<Tp>, Complex<Tp>> quadratic(Tp a, Tp b, Tp c) {
+    Tp d = b * b - 4 * a * c;
+    Complex<Tp> sqrt_d(d);
+
+    if (d < 0) {
+        sqrt_d = {0, std::sqrt(std::abs(d))};
+    }
+
+    auto z1 = (-b + sqrt_d) / (2 * a);
+    auto z2 = (-b - sqrt_d) / (2 * a);
+    return {z1, z2};
+}
