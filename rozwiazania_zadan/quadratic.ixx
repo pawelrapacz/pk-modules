@@ -6,10 +6,10 @@ module;
 export module mathh:quadratic;
 import Complex;
 
-export template<typename Tp>
-std::pair<Complex<Tp>, Complex<Tp>> quadratic(Tp a, Tp b, Tp c) {
-    Tp d = b * b - 4 * a * c;
-    Complex<Tp> sqrt_d(d);
+std::pair<Complex<double>, Complex<double>>
+quadratic(double a, double b, double c) {
+    double d = b * b - 4 * a * c;
+    Complex<double> sqrt_d = d;
 
     if (d < 0) {
         sqrt_d = {0, std::sqrt(std::abs(d))};
