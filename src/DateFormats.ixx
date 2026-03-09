@@ -1,17 +1,22 @@
 module;
 
 #include <string>
+#include <string_view>
 #include <chrono>
 #include <iostream>
 #include <iomanip>
 
 export module DateFormats;
 
-std::string months[]{
-            "JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"
+
+constexpr std::string_view months[]{
+    "JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"
 };
-namespace my {
-export class time {
+
+
+export namespace my {
+
+class time {
     int year;
     unsigned month;
     unsigned day;
