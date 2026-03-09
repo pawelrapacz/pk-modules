@@ -1,0 +1,42 @@
+Zadanie 1. Zrobić program importujący moduł matematyka składający się z 2 partycji:
+
+partycja 1 liczby zespolone (trzeba tylko zmienić moduł z przykładu na partycję)
+
+partycja 2 stereometria (założymy że będą to wielościany foremne, prawidłowe), zrobić klasę określającą te wielościany dla 3 możliwych figur w podstawie, trójkąt, prostokąt, sześciokąt.
+Pola klasy:
+liczbę boków, 
+typ (ostrosłup/graniastosłup),  
+wymiary (długość krawędzi podstawy, wysokość)
+
+Metody klasy:
+obliczanie objętości graniastosłupów i ostrosłupów
+obliczanie pola powierzchni
+
+
+Zadanie 2. Do modułu z zadania 1 dodać 3 partycję obsługującą równania kwadratowe.
+Rozwiązywanie równań kwadratowych i z pomocą modułu z liczbami zespolonymi też z ujemną deltą.
+
+Zadanie 3. System bankowy. Stworzyć moduł który jako partycję będzie używał moduł time z przykładu.
+System zawiera 1 partycję obsługującą operacje pieniężne na koncie i sam moduł bankowy zawierający klasę z kontami.
+
+Pola klasy operacja:
+Kwota operacji (może być wpłata albo wypłata)
+czas dokonania operacji (wykorzystanie konstruktora domyślnego klasy time z przykładu)
+
+Metody klasy operacja:
+wyświetlanie danych o operacji, kwota danej operacji i czas jej realizacji (wykorzystanie jednej z gotowych funkcji z DateFormats z przykładu, można wyświetlać w dowolnym formacie jakim się chce printGMT(), printZULU(), printLOCAL())
+
+Moduł bankowy zawiera klasę potrzebną do funkcjonowania systemu bankowego.
+Pola klasy bank:
+imię i nazwisko właściciela
+numer konta
+saldo
+tablica z historią wpłat/wypłat (najlepiej vector obiektów klasy operacja)
+pin do konta
+
+metody klasy bank
+wpłacanie/wypłacanie pieniędzy z konta
+sprawdzanie stanu konta
+wyświetlająca wszystkie operacje na koncie
+
+każda operacja wykonywana na koncie wymaga podania numeru pin
