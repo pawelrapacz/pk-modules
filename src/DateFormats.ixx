@@ -109,38 +109,5 @@ public:
     }
 };
 
-export void time1() {
-	auto time=std::chrono::system_clock::now();
-	//std::cout << time << std::endl;
-    auto localtime = time+ std::chrono::hours(1);
-    std::cout << std::chrono::floor<std::chrono::seconds>(time) <<"UTC/GMT" << std::endl;
-    std::cout << std::chrono::floor<std::chrono::seconds>(localtime) << "Local time" << std::endl;
 
-    
-    auto dp = std::chrono::floor<std::chrono::days>(time);
-    std::chrono::year_month_day ymd{ dp };
-
-    
-    std::chrono::hh_mm_ss hhmmss{ std::chrono::floor<std::chrono::seconds>(time - dp) };
-    //time.year()
-    
-    //std::cout << (int)ymd.year() << " " << (unsigned)ymd.month() << " " << (unsigned)ymd.day() << "\n";
-    //std::cout << hms.hours().count() << ":" << hms.minutes().count() << "\n";
-    //std::cout << ymd << std::endl;
-    //std::cout << hms << std::endl;
-    int year = (int)ymd.year();
-    
-    
-    unsigned month = (unsigned)ymd.month();
-    unsigned day = (unsigned)ymd.day();
-    int hour= hhmmss.hours().count();
-    int minutes= hhmmss.minutes().count();
-    int seconds = hhmmss.seconds().count();
-    std::cout
-        << std::setw(2) << std::setfill('0') << day
-        << std::setw(2) << std::setfill('0') << hour
-        << std::setw(2) << std::setfill('0') << minutes
-        << "Z " << months[month - 1] << " " << year % 100;
-        ;
-}
 }
