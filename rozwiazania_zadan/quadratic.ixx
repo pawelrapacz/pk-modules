@@ -9,11 +9,12 @@ import Complex;
 std::pair<Complex<double>, Complex<double>>
 quadratic(double a, double b, double c) {
     double d = b * b - 4 * a * c;
-    Complex<double> sqrt_d = d;
+    Complex<double> sqrt_d;
 
-    if (d < 0) {
+    if (d < 0)
         sqrt_d = {0, std::sqrt(std::abs(d))};
-    }
+    else
+        sqrt_d = std::sqrt(d);
 
     auto z1 = (-b + sqrt_d) / (2 * a);
     auto z2 = (-b - sqrt_d) / (2 * a);
