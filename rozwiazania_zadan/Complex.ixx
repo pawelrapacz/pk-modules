@@ -142,8 +142,8 @@ export {
 
     template<typename Tp>
     Complex<Tp> operator-(const Tp& x, const Complex<Tp>& y) {
-        Complex<Tp> r = y;
-        r -= x;
+        Complex<Tp> r = x;
+        r -= y;
         return r;
     }
 
