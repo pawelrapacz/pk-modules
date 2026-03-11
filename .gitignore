@@ -1,3 +1,13 @@
 .cache/
 .vscode/
 build/
+
+cmpl.bash
+
+*.exe
+*.out
+
+gcm.cache/
+*.o
+*.pcm
+*.gcm
